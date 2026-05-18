@@ -31,8 +31,9 @@ export default function LivePrices({ initialData }: Props) {
     const interval = setInterval(() => {
       setStocks((prev) =>
         prev.map((stock) => {
-          const delta = parseFloat((Math.random() * 4 - 2).toFixed(2));
-          return { ...stock, price: parseFloat((stock.price + delta).toFixed(2)) };
+            const delta = parseFloat((Math.random() * 4 - 2).toFixed(2));
+            const newPrice = Math.max(1, parseFloat((stock.price + delta).toFixed(2)));
+            return { ...stock, price: newPrice };
         })
       );
     }, 2000);
