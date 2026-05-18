@@ -11,10 +11,10 @@ export function middleware(req: NextRequest) {
 
   const token = req.cookies.get("token");
 
-  if (!token?.value) {
+    if (!token?.value || token.value.trim() === "") {
     console.log("Unauthorized access attempt:", req.nextUrl.pathname);
     return NextResponse.redirect(new URL("/login", req.url));
-  }
+    }
 
   try {
     const parsed = JSON.parse(token.value);
