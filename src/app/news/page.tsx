@@ -1,4 +1,5 @@
 import NewsList from "@/components/NewsList";
+import { log } from "@/lib/logger";
 
 export const revalidate = 30;
 
@@ -13,8 +14,8 @@ async function getNews(): Promise<NewsItem[]> {
       { title: "Tech stocks rally continues" },
     ];
   } catch (error) {
-    console.log("News fetch error", error);
-    return [];
+    log(`News fetch error: ${error}`, "error");
+    throw new Error("Failed to fetch news");
   }
 }
 
@@ -32,11 +33,7 @@ export default async function NewsPage() {
           Logout
         </a>
       </div>
-      <p className="text-xs text-gray-400 mb-4">Refreshes every 30 seconds (ISR)</p>
       <NewsList news={news} />
-      <p className="mt-6 text-xs text-gray-400">
-        <a href="/dashboard" className="underline hover:text-gray-600">← Back to dashboard</a>
-      </p>
     </div>
   );
 }

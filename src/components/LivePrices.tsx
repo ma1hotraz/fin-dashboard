@@ -59,9 +59,6 @@ export default function LivePrices({ initialData }: Props) {
           ))}
         </tbody>
       </table>
-      <p className="text-xs text-gray-400 px-4 py-2 bg-gray-50">
-        Live prices update every 2 seconds
-      </p>
     </div>
   );
 }

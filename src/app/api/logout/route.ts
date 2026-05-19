@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { log } from "@/lib/logger";
 
-export async function GET() {
+export async function GET(req: Request) {
   log("User logged out");
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const response = NextResponse.redirect(new URL("/login", baseUrl));
+  const origin = new URL(req.url).origin;
+  const response = NextResponse.redirect(new URL("/login", origin));
 
   response.cookies.set("token", "", {
     httpOnly: true,

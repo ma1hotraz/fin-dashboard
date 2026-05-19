@@ -1,19 +1,20 @@
 import PortfolioTable from "@/components/PortfolioTable";
 import { Stock } from "@/lib/portfolio";
+import { getBaseUrl } from "@/lib/server-url";
 import { log } from "@/lib/logger";
 
 async function getPortfolio(): Promise<Stock[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/portfolio`, {
-      cache: "no-store",
-    });
-    if (!res.ok) throw new Error("Failed to fetch portfolio");
-    return res.json();
-  } catch (error) {
-    log(`Dashboard fetch error: ${error}`, "error");
-    return [];
+  const baseUrl = await getBaseUrl();
+  const res = await fetch(`${baseUrl}/api/portfolio`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    log(`Dashboard fetch failed with status ${res.status}`, "error");
+    throw new Error("Failed to fetch portfolio");
   }
+
+  return res.json();
 }
 
 export default async function DashboardPage() {
@@ -30,18 +31,11 @@ export default async function DashboardPage() {
           Logout
         </a>
       </div>
-
       {data.length === 0 ? (
         <p className="text-gray-500">No portfolio data available.</p>
       ) : (
         <PortfolioTable data={data} />
       )}
-
-      <p className="mt-4 text-xs text-gray-400">
-        <a href="/news" className="underline hover:text-gray-600">
-          View market news →
-        </a>
-      </p>
     </div>
   );
 }
