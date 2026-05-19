@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { log } from "@/lib/logger";
 
 const PROTECTED_ROUTES = ["/dashboard", "/news"];
 
@@ -11,27 +12,27 @@ export function middleware(req: NextRequest) {
 
   const token = req.cookies.get("token");
 
-    if (!token?.value || token.value.trim() === "") {
-    console.log("Unauthorized access attempt:", req.nextUrl.pathname);
+  if (!token?.value || token.value.trim() === "") {
+    log(`Unauthorized access attempt: ${req.nextUrl.pathname}`, "warn");
     return NextResponse.redirect(new URL("/login", req.url));
-    }
+  }
 
   try {
     const parsed = JSON.parse(token.value);
 
     if (!parsed.userId || !parsed.exp) {
-      console.log("Malformed token detected");
+      log("Malformed token detected", "warn");
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
     if (parsed.exp < Date.now()) {
-      console.log("Expired token detected");
+      log("Expired token detected", "warn");
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
     return NextResponse.next();
   } catch {
-    console.log("Invalid token, JSON parse failed");
+    log("Invalid token, JSON parse failed", "warn");
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
