@@ -42,7 +42,7 @@ npm start
 
 - Auth token (`userId`, `exp`) stored in an **HTTP-only** cookie.
 - No `localStorage` or `sessionStorage` for tokens.
-- **Middleware** protects `/dashboard` and `/news` (missing, invalid, expired tokens redirect to `/login`).
+- **Proxy** (`src/proxy.ts`) protects `/dashboard` and `/news` (missing, invalid, expired tokens redirect to `/login`). Next.js 16 renamed the former `middleware` convention to `proxy`; behavior is unchanged.
 - Login validated on **client and server**.
 - Cookie flags: `httpOnly`, `sameSite: "strict"`, `secure` in production.
 

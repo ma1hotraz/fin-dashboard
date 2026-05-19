@@ -3,7 +3,7 @@ import { log } from "@/lib/logger";
 
 const PROTECTED_ROUTES = ["/dashboard", "/news"];
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const isProtected = PROTECTED_ROUTES.some((route) =>
     req.nextUrl.pathname.startsWith(route)
   );
