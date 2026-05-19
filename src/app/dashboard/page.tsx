@@ -1,5 +1,6 @@
 import PortfolioTable from "@/components/PortfolioTable";
 import { Stock } from "@/lib/portfolio";
+import { log } from "@/lib/logger";
 
 async function getPortfolio(): Promise<Stock[]> {
   try {
@@ -10,7 +11,7 @@ async function getPortfolio(): Promise<Stock[]> {
     if (!res.ok) throw new Error("Failed to fetch portfolio");
     return res.json();
   } catch (error) {
-    console.log("Dashboard fetch error", error);
+    log(`Dashboard fetch error: ${error}`, "error");
     return [];
   }
 }
