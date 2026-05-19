@@ -1,3 +1,4 @@
+import PageShell from "@/components/PageShell";
 import PortfolioTable from "@/components/PortfolioTable";
 import { Stock } from "@/lib/portfolio";
 import { getBaseUrl } from "@/lib/server-url";
@@ -21,21 +22,12 @@ export default async function DashboardPage() {
   const data = await getPortfolio();
 
   return (
-    <div className="p-10 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-semibold text-gray-900">Portfolio Dashboard</h1>
-        <a
-          href="/api/logout"
-          className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded transition"
-        >
-          Logout
-        </a>
-      </div>
+    <PageShell title="Portfolio" active="dashboard">
       {data.length === 0 ? (
-        <p className="text-gray-500">No portfolio data available.</p>
+        <p className="text-sm text-zinc-500">No portfolio data available.</p>
       ) : (
         <PortfolioTable data={data} />
       )}
-    </div>
+    </PageShell>
   );
 }

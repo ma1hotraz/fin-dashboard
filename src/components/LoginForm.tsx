@@ -52,41 +52,53 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleLogin}
-      className="flex flex-col gap-4 w-[320px] bg-white p-8 rounded-xl shadow"
+      className="w-full max-w-sm rounded-lg border border-zinc-200/80 bg-white p-8"
     >
-      <h1 className="text-2xl font-semibold text-gray-800">Sign in</h1>
+      <p className="text-xs font-medium uppercase tracking-widest text-zinc-400">
+        Fin Dashboard
+      </p>
+      <h1 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
+        Sign in
+      </h1>
+      <p className="mt-1 text-sm text-zinc-500">Enter your credentials to continue.</p>
 
-      {error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
-          {error}
-        </p>
-      )}
+      <div className="mt-8 flex flex-col gap-4">
+        {error && (
+          <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            {error}
+          </p>
+        )}
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+        <label className="flex flex-col gap-1.5">
+          <span className="text-xs font-medium text-zinc-600">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="rounded-md border border-zinc-200 bg-zinc-50/50 px-3 py-2 text-sm text-zinc-900 outline-none transition focus:border-zinc-400 focus:bg-white"
+            required
+          />
+        </label>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
+        <label className="flex flex-col gap-1.5">
+          <span className="text-xs font-medium text-zinc-600">Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="rounded-md border border-zinc-200 bg-zinc-50/50 px-3 py-2 text-sm text-zinc-900 outline-none transition focus:border-zinc-400 focus:bg-white"
+            required
+          />
+        </label>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-black text-white py-2 rounded text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition"
-      >
-        {loading ? "Signing in..." : "Sign in"}
-      </button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-2 rounded-md bg-zinc-900 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 disabled:opacity-50"
+        >
+          {loading ? "Signing in…" : "Sign in"}
+        </button>
+      </div>
     </form>
   );
 }

@@ -12,12 +12,20 @@ const StockRow = memo(function StockRow({ stock }: { stock: Stock }) {
   const isPositive = pl >= 0;
 
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
-      <td className="py-3 px-4 font-medium text-gray-900">{stock.symbol}</td>
-      <td className="py-3 px-4 text-gray-600">{stock.qty}</td>
-      <td className="py-3 px-4 text-gray-600">${stock.avg.toFixed(2)}</td>
-      <td className="py-3 px-4 font-medium">${stock.price.toFixed(2)}</td>
-      <td className={`py-3 px-4 font-semibold ${isPositive ? "text-green-600" : "text-red-500"}`}>
+    <tr>
+      <td className="px-4 py-3.5 font-medium text-zinc-900">{stock.symbol}</td>
+      <td className="px-4 py-3.5 tabular-nums text-zinc-600">{stock.qty}</td>
+      <td className="px-4 py-3.5 tabular-nums text-zinc-600">
+        ${stock.avg.toFixed(2)}
+      </td>
+      <td className="px-4 py-3.5 tabular-nums font-medium text-zinc-900">
+        ${stock.price.toFixed(2)}
+      </td>
+      <td
+        className={`px-4 py-3.5 tabular-nums font-medium ${
+          isPositive ? "text-emerald-600" : "text-red-600"
+        }`}
+      >
         {isPositive ? "+" : ""}${pl.toFixed(2)}
       </td>
     </tr>
@@ -31,9 +39,12 @@ export default function LivePrices({ initialData }: Props) {
     const interval = setInterval(() => {
       setStocks((prev) =>
         prev.map((stock) => {
-            const delta = parseFloat((Math.random() * 4 - 2).toFixed(2));
-            const newPrice = Math.max(1, parseFloat((stock.price + delta).toFixed(2)));
-            return { ...stock, price: newPrice };
+          const delta = parseFloat((Math.random() * 4 - 2).toFixed(2));
+          const newPrice = Math.max(
+            1,
+            parseFloat((stock.price + delta).toFixed(2))
+          );
+          return { ...stock, price: newPrice };
         })
       );
     }, 2000);
@@ -42,18 +53,18 @@ export default function LivePrices({ initialData }: Props) {
   }, []);
 
   return (
-    <div className="rounded-xl border border-gray-200 overflow-hidden">
+    <div className="overflow-hidden rounded-lg border border-zinc-200/80 bg-white">
       <table className="w-full text-sm">
-        <thead className="bg-gray-50 border-b border-gray-200">
-          <tr>
-            <th className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Symbol</th>
-            <th className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Qty</th>
-            <th className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Avg Price</th>
-            <th className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Live Price</th>
-            <th className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">P/L</th>
+        <thead>
+          <tr className="border-b border-zinc-200/80 text-left text-xs font-medium uppercase tracking-wide text-zinc-400">
+            <th className="px-4 py-3">Symbol</th>
+            <th className="px-4 py-3">Qty</th>
+            <th className="px-4 py-3">Avg</th>
+            <th className="px-4 py-3">Price</th>
+            <th className="px-4 py-3">P/L</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-zinc-100">
           {stocks.map((stock) => (
             <StockRow key={stock.symbol} stock={stock} />
           ))}

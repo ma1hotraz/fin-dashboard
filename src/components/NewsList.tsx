@@ -8,16 +8,13 @@ interface Props {
 
 export default function NewsList({ news }: Props) {
   if (news.length === 0) {
-    return <p className="text-gray-500">No news available.</p>;
+    return <p className="text-sm text-zinc-500">No news available.</p>;
   }
 
   return (
-    <ul className="flex flex-col gap-3">
+    <ul className="divide-y divide-zinc-200/80 overflow-hidden rounded-lg border border-zinc-200/80 bg-white">
       {news.map((item, index) => (
-        <li
-          key={index}
-          className="border border-gray-200 rounded-lg px-5 py-4 bg-white hover:shadow-sm transition text-gray-800 text-sm"
-        >
+        <li key={index} className="px-4 py-4 text-sm text-zinc-800">
           {item.title}
         </li>
       ))}
