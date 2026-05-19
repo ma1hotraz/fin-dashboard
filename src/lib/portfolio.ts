@@ -13,3 +13,9 @@ export const MOCK_PORTFOLIO: Stock[] = [
 export function calculatePL(stock: Stock): number {
   return (stock.price - stock.avg) * stock.qty;
 }
+
+export function portfolioSummary(stocks: Stock[]) {
+  const totalPL = stocks.reduce((sum, s) => sum + calculatePL(s), 0);
+  const marketValue = stocks.reduce((sum, s) => sum + s.price * s.qty, 0);
+  return { totalPL, marketValue, positions: stocks.length };
+}

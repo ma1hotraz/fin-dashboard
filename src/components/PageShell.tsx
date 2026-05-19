@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SignOutButton from "@/components/SignOutButton";
 
 interface Props {
   title: string;
@@ -32,12 +33,7 @@ export default function PageShell({ title, active, children }: Props) {
               News
             </Link>
             <span className="h-4 w-px bg-zinc-200" aria-hidden />
-            <a
-              href="/api/logout"
-              className="text-zinc-500 transition hover:text-zinc-900"
-            >
-              Sign out
-            </a>
+            <SignOutButton />
           </nav>
         </header>
         {children}
